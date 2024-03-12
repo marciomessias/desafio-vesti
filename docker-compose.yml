@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  products-service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: products-service
+    volumes:
+      - ./:/var/www
+    ports:
+      - 8000:8000
+    networks:
+      - default
+
+  products-db:
+    image: mysql:8.0
+    container_name: products-db
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
